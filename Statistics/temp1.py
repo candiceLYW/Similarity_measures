@@ -10,13 +10,13 @@ a = users_library.UsersLibrary(users_books_data="/Users/danil.gizdatullin/Projec
                                similarity_data="/Users/danil.gizdatullin/Projects/Recommendations/Similarity_data.csv")
 a.initialize_similarity_matrix()
 # a.initialize_structure()
-# a.write_library_structure_into_files(10000)
+# a.write_library_structure_into_files(1000)
 # a.all_users_median_library_similarities(7)
 # print(len(a.median_similarities))
 
 
-# f = open("median_similarities.txt", "a")
-# with open("jsons/data1.json", "r") as fp:
+# f = open("/Users/danil.gizdatullin/Projects/Recommendations/txts/median_similarities1.txt", "a")
+# with open("/Users/danil.gizdatullin/Projects/Recommendations/jsons/data1.json", "r") as fp:
 #     data = json.load(fp)
 #     for user_id in data.iterkeys():
 #         print(user_id)
@@ -26,7 +26,7 @@ a.initialize_similarity_matrix()
 #             f.write("\n")
 # f.close()
 
-for i in xrange(1, 10001):
+for i in xrange(1, 1001):
     f = open("/Users/danil.gizdatullin/Projects/Recommendations/txts/median_similarities" + str(i) + ".txt", "w")
     fp = open("/Users/danil.gizdatullin/Projects/Recommendations/jsons/data" + str(i) + ".json", "r")
     data = json.load(fp)

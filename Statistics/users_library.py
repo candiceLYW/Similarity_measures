@@ -17,7 +17,7 @@ class UsersLibrary:
         self.similarity_data = similarity_data
         self.user_ids = []
         self.library_structure = {}
-        self.similarity_matrix = []
+        self.similarity_matrix = {}
         self.median_similarities = []
         self.size_of_similarity_matrix = 0
 
@@ -37,22 +37,7 @@ class UsersLibrary:
         self.library_structure = users_library
 
     def initialize_similarity_matrix(self):
-        data_file = open(self.similarity_data, 'r')
-        next(data_file)
-        books_id = set([])
-        for expression in data_file:
-            data_line = expression[0:-1].split(',')
-            book1 = int(data_line[0])
-            book2 = int(data_line[1])
-            books_id.add(book1)
-            books_id.add(book2)
-        data_file.close()
-        maximum_book_id = max(books_id)
-
-        similarity_matrix = np.zeros([maximum_book_id, maximum_book_id])
-        self.size_of_similarity_matrix = maximum_book_id
-        s_similarity_matrix = sparse.csr_matrix(similarity_matrix)
-        del similarity_matrix
+        similarity_matrix = {}
         data_file = open(self.similarity_data, 'r')
         next(data_file)
         for expression in data_file:
@@ -60,8 +45,12 @@ class UsersLibrary:
             book1 = int(data_line[0])
             book2 = int(data_line[1])
             sim = float(data_line[2])
-            s_similarity_matrix[book1 - 1, book2 - 1] = sim
-        self.similarity_matrix = s_similarity_matrix
+            if book1 < book2:
+                similarity_matrix[str(book1) + str(book2)] = sim
+            else:
+                similarity_matrix[str(book2) + str(book1)] = sim
+
+        self.similarity_matrix = similarity_matrix
 
     def users_library_similarity_median(self, library_structure, user_id):
         similarities = []
@@ -69,14 +58,14 @@ class UsersLibrary:
         for pair in itertools.combinations(books, r=2):
             book1 = pair[0]
             book2 = pair[1]
-            if (book1 <= self.size_of_similarity_matrix) and (book2 <= self.size_of_similarity_matrix):
-                sim = self.similarity_matrix[book1 - 1, book2 - 1]
-                if sim != 0:
-                    similarities.append(sim)
-                else:
-                    sim = self.similarity_matrix[book2 - 1, book1 - 1]
-                    if sim != 0:
-                        similarities.append(sim)
+            if book1 < book2:
+                key = str(book1) + str(book2)
+            else:
+                key = str(book2) + str(book1)
+            if key in self.similarity_matrix:
+                sim = self.similarity_matrix[key]
+                similarities.append(sim)
+
         if similarities:
             answer = median(similarities)
             del similarities
