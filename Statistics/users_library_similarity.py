@@ -11,10 +11,8 @@ class UsersLibrary:
     def __init__(self, users_books_data=conf.path_to_users_library, similarity_data=conf.path_to_similarity_data):
         self.users_books_data = users_books_data
         self.similarity_data = similarity_data
-        self.user_ids = []
         self.library_structure = {}
         self.similarity_matrix = {}
-        self.median_similarities = []
 
     def initialize_structure(self):
         data_file = open(self.users_books_data, 'r')
@@ -71,11 +69,6 @@ class UsersLibrary:
 
         self.initialize_similarity_matrix()
         self.initialize_structure()
-
-        for user_id in self.library_structure.iterkeys():
-                sim = self.users_library_similarity_median(user_id)
-                if sim != -1:
-                    self.median_similarities.append(sim)
 
         # clear file to store computed median similarity
         open(path_to_store_result, 'w').close()
