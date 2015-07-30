@@ -52,9 +52,9 @@ class UsersLibrary:
 
         self.similarity_matrix = similarity_matrix
 
-    def users_library_similarity_median(self, library_structure, user_id):
+    def users_library_similarity_median(self, user_id):
         similarities = []
-        books = library_structure[user_id]
+        books = self.library_structure[user_id]
         for pair in itertools.combinations(books, r=2):
             book1 = pair[0]
             book2 = pair[1]

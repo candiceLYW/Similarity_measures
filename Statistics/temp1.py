@@ -9,42 +9,42 @@ similarity_data = "/Users/danil.gizdatullin/Projects/Recommendations/Similarity_
 a = users_library.UsersLibrary(users_books_data="/Users/danil.gizdatullin/Projects/Recommendations/user_book.csv",
                                similarity_data="/Users/danil.gizdatullin/Projects/Recommendations/Similarity_data.csv")
 a.initialize_similarity_matrix()
-# a.initialize_structure()
+a.initialize_structure()
 # a.write_library_structure_into_files(1000)
 # a.all_users_median_library_similarities(7)
 # print(len(a.median_similarities))
 
 
-# f = open("/Users/danil.gizdatullin/Projects/Recommendations/txts/median_similarities1.txt", "a")
-# with open("/Users/danil.gizdatullin/Projects/Recommendations/jsons/data1.json", "r") as fp:
+f = open("/Users/danil.gizdatullin/Projects/Recommendations/txts/median_similarities.txt", "a")
+cntr = 100
+for user_id in a.library_structure.iterkeys():
+    sim = a.users_library_similarity_median(user_id)
+    cntr += 1
+    if sim != -1:
+        f.write(str(sim)+"\n")
+    if cntr % 1000 == 0:
+        print 1
+f.close()
+
+# for i in xrange(1, 1001):
+#     f = open("/Users/danil.gizdatullin/Projects/Recommendations/txts/median_similarities" + str(i) + ".txt", "w")
+#     fp = open("/Users/danil.gizdatullin/Projects/Recommendations/jsons/data" + str(i) + ".json", "r")
 #     data = json.load(fp)
-#     for user_id in data.iterkeys():
-#         print(user_id)
+#     keys = data.iterkeys()
+#     for user_id in keys:
+#         # print(user_id)
 #         sim = a.users_library_similarity_median(data, user_id)
 #         if sim != -1:
 #             f.write(str(sim))
 #             f.write("\n")
-# f.close()
-
-for i in xrange(1, 1001):
-    f = open("/Users/danil.gizdatullin/Projects/Recommendations/txts/median_similarities" + str(i) + ".txt", "w")
-    fp = open("/Users/danil.gizdatullin/Projects/Recommendations/jsons/data" + str(i) + ".json", "r")
-    data = json.load(fp)
-    keys = data.iterkeys()
-    for user_id in keys:
-        # print(user_id)
-        sim = a.users_library_similarity_median(data, user_id)
-        if sim != -1:
-            f.write(str(sim))
-            f.write("\n")
-    print (i)
-    f.close()
-    fp.close()
-    del data
-    del sim
-    del f
-    del fp
-    del keys
+#     print (i)
+#     f.close()
+#     fp.close()
+#     del data
+#     del sim
+#     del f
+#     del fp
+#     del keys
 
 
 # aa = a.all_users_median_library_similarities()
