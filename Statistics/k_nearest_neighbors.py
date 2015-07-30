@@ -1,6 +1,9 @@
 __author__ = 'danil.gizdatullin'
+
 import numpy as np
 from scipy.stats import skew
+
+import config as conf
 
 
 def add_new_neighbor(old_neighbors={}, new_obj={}, number_of_neighbors=5):
@@ -19,7 +22,7 @@ def add_new_neighbor(old_neighbors={}, new_obj={}, number_of_neighbors=5):
 
 
 class KNearestNeighbors:
-    def __init__(self, file_name='/Users/danil.gizdatullin/Projects/Recommendations/Similarity_data.csv'):
+    def __init__(self, file_name=conf.path_to_similarity_data):
         self.file_name = file_name
         self.structure = {}
         self.book_times = {}

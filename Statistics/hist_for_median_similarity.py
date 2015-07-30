@@ -2,7 +2,9 @@ __author__ = 'danil.gizdatullin'
 
 import matplotlib.pyplot as plt
 
-f = open("/Users/danil.gizdatullin/Projects/Recommendations/txts/median_similarities.txt", "r")
+import config as conf
+
+f = open(conf.path_to_store_median_similarities, "r")
 similarities = []
 for line in f:
     value = float(line[0: -1])

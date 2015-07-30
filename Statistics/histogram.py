@@ -2,7 +2,9 @@ __author__ = 'danil.gizdatullin'
 import matplotlib.pyplot as plt
 import numpy as np
 
-name_of_file = '/Users/danil.gizdatullin/Projects/Recommendations/Similarity_data.csv'
+import config as conf
+
+name_of_file = conf.path_to_similarity_data
 f = open(name_of_file, 'r')
 next(f)
 similarity_values = []
@@ -16,7 +18,7 @@ for line in f:
         book_times_in_neighbors[book1] = 0
     if not(book2 in book_times_in_neighbors):
         book_times_in_neighbors[book2] = 0
-    # similarity_values.append(float(items[2]))
+    similarity_values.append(float(items[2]))
     checker += 1
 print(checker)
 similarity_values_arr = np.array(similarity_values)
