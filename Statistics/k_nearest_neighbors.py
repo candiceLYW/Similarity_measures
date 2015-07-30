@@ -1,6 +1,10 @@
 __author__ = 'danil.gizdatullin'
+
 import numpy as np
+import matplotlib.pyplot as plt
 from scipy.stats import skew
+
+import config as conf
 
 
 def add_new_neighbor(old_neighbors={}, new_obj={}, number_of_neighbors=5):
@@ -19,7 +23,7 @@ def add_new_neighbor(old_neighbors={}, new_obj={}, number_of_neighbors=5):
 
 
 class KNearestNeighbors:
-    def __init__(self, file_name='/Users/danil.gizdatullin/Projects/Recommendations/Similarity_data.csv'):
+    def __init__(self, file_name=conf.path_to_similarity_data):
         self.file_name = file_name
         self.structure = {}
         self.book_times = {}
@@ -59,7 +63,7 @@ class KNearestNeighbors:
 
         self.book_times = book_nearest_times
 
-    def statistics(self, number_of_nearest_neighbors=5):
+    def statistics(self, number_of_nearest_neighbors=5, histogram=False, number_of_bins=20):
         stat_dict = {}
         self.k_nearest_neighbors(k=number_of_nearest_neighbors)
         self.how_many_times_in_nearest()
@@ -69,5 +73,12 @@ class KNearestNeighbors:
         times_values_arr = np.array(times_values)
         times_values_arr_non_zero = times_values_arr[np.nonzero(times_values_arr)]
         stat_dict["Reachability"] = len(times_values_arr_non_zero) / float(len(times_values_arr))
+
+        if histogram:
+            plt.hist(times_values_arr, bins=number_of_bins)
+            plt.title("Times for each book in %s-nearest neighbors" % str(conf.number_of_nearest_neighbors))
+            plt.xlabel("Value")
+            plt.ylabel("Frequency")
+            plt.show()
 
         return stat_dict
